@@ -1,0 +1,38 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: express
+spec:
+  params:
+    - name: app-name
+      type: string
+      description: Application name
+    - name: source-repo
+      type: string
+      description: Application name
+    - name: image-repo
+      type: string
+      description: Application name
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: pipeline-shared-data
+      params:
+        - name: url
+          value: "$(params.source-repo)"
+    - name: buildah
+      runAfter:
+        - git-clone
+      taskRef:
+        name: buildah
+      params:
+        - name: IMAGE
+          value: "$(params.image-repo)/$(params.app-name):$(tasks.git-clone.results.commit)"
+      workspaces:
+        - name: source
+          workspace: pipeline-shared-data
+  workspaces:
+    - name: pipeline-shared-data
