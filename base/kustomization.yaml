@@ -7,3 +7,4 @@ resources:
   - deploy.Task.yaml
   - express.pipeline.yaml
   - quay-io-credentials.Secret.yaml
+  - webhook-receiver.EventListener.yaml
