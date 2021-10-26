@@ -30,7 +30,7 @@ spec:
         name: buildah
       params:
         - name: IMAGE
-          value: "$(params.image-repo)/$(params.app-name):$(tasks.git-clone.results.commit)"
+          value: "$(params.image-repo):$(tasks.git-clone.results.commit)"
       workspaces:
         - name: source
           workspace: pipeline-shared-data
