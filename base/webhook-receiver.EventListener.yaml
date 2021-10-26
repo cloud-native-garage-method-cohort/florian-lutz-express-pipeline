@@ -4,11 +4,6 @@ metadata:
   name: webhook-receiver
 spec:
   serviceAccountName: webhook-receiver
-  params:
-    - name: source-repo
-      value: $(body.repository.url)
-    - name: sha
-      value: $(body.head_commit.id)
   triggers:
     - template:
         name: webhook-receiver
@@ -21,6 +16,11 @@ kind: TriggerTemplate
 metadata:
   name: webhook-receiver
 spec:
+  params:
+    - name: source-repo
+      description: Source code repository
+    - name: sha
+      description: Precise SHA of the commit to build
   resourcetemplates:
     - apiVersion: tekton.dev/v1beta1
       kind: PipelineRun
@@ -53,6 +53,12 @@ apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerBinding
 metadata:
   name: webhook-receiver
+spec:
+  params:
+    - name: source-repo
+      value: $(body.repository.url)
+    - name: sha
+      value: $(body.head_commit.id)
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
