@@ -4,12 +4,17 @@ metadata:
   name: webhook-receiver
 spec:
   serviceAccountName: webhook-receiver
+  params:
+    - name: source-repo
+      value: $(body.repository.url)
+    - name: sha
+      value: $(body.head_commit.id)
   triggers:
     - template:
         name: webhook-receiver
       bindings:
         - ref: webhook-receiver
-# ...
+
 ---
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
@@ -29,7 +34,9 @@ spec:
           - name: image-repo
             value: quay.io/fluxens0/express-sample-app
           - name: source-repo
-            value: https://github.com/cloud-native-garage-method-cohort/florian-lutz-express-pipeline
+            value: $(tt.params.source-repo)
+          - name: sha
+            value: $(tt.params.sha)
         pipelineRef:
           name: express
         workspaces:

@@ -13,6 +13,10 @@ spec:
     - name: image-repo
       type: string
       description: Application name
+    - name: sha
+      type: string
+      default: ""
+      description: Precise SHA of the commit to build
   tasks:
     - name: git-clone
       taskRef:
@@ -23,6 +27,8 @@ spec:
       params:
         - name: url
           value: "$(params.source-repo)"
+        - name: commit
+          value: "$(params.sha)"
     - name: create-image
       runAfter:
         - git-clone
