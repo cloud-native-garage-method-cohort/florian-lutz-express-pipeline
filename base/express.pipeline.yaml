@@ -27,7 +27,7 @@ spec:
       params:
         - name: url
           value: "$(params.source-repo)"
-        - name: commit
+        - name: revision
           value: "$(params.sha)"
     - name: create-image
       runAfter:
