@@ -8,3 +8,6 @@ resources:
   - express.pipeline.yaml
   - quay-io-credentials.Secret.yaml
   - webhook-receiver.EventListener.yaml
+  - save-configuration.Task.yaml
+  - production-repository.ConfigMap.yaml
+  - git-credentials.Secret.yaml
